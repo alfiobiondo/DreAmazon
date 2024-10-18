@@ -15,18 +15,5 @@ module.exports = {
 			},
 		},
 	},
-	corePlugins: {
-		preflight: false,
-	},
-	plugins: [
-		function ({ addBase }) {
-			addBase({
-				'*': {
-					margin: '0',
-					padding: '0',
-					boxSizing: 'border-box',
-				},
-			});
-		},
-	],
+	plugins: [],
 };
