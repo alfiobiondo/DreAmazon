@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Head from 'next/head';
-import Header from '@/components/Header';
+import Navigation from '@/components/Navigation';
 import Banner from '@/components/Banner';
 import ProductFeed from '@/components/ProductFeed';
 
@@ -11,7 +11,7 @@ const Home = ({ products }) => {
 				<title>DreAmazon</title>
 			</Head>
 
-			<Header />
+			<Navigation />
 
 			<main className='max-w-screen-2xl mx-auto'>
 				<Banner />
