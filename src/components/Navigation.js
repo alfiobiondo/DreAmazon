@@ -6,6 +6,7 @@ import {
 	ShoppingCartIcon,
 } from '@heroicons/react/24/outline';
 import Link from 'next/link';
+import { signIn, signOut, useSession } from 'next-auth/react';
 
 const Navigation = () => {
 	return (
@@ -37,7 +38,7 @@ const Navigation = () => {
 
 					{/* RightHandSide */}
 					<ul className='text-white flex items-center text-xs space-x-6 mx-6 whitespace-nowrap'>
-						<li className='link'>
+						<li onClick={signIn} className='link'>
 							<a href='#'>
 								<p>Hello Alfio Biondo</p>
 								<p className='font-extrabold md:text-sm'>Account & Lists</p>

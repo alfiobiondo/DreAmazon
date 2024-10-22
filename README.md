@@ -4,6 +4,8 @@ DreAmazon is an Amazon clone made with Next.js, Tailwind CSS, Redix (State Manag
 
 ## The project is going to be deployed on Vercel
 
+[dreamazon.vercel.app](dreamazon.vercel.app)
+
 ## Contributing
 
 Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
