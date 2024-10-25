@@ -3,9 +3,27 @@ import Image from 'next/image';
 import { StarIcon } from '@heroicons/react/24/solid';
 import { IntlProvider, FormattedNumber } from 'react-intl';
 import useProductCard from '@/hooks/useProductCard';
+import useBasket from '@/hooks/useBasket';
+import { v4 as uuidv4 } from 'uuid';
 
 const ProductCard = ({ id, title, price, description, category, image }) => {
 	const { rating, hasPrime } = useProductCard();
+	const { addItemToBasket } = useBasket();
+
+	const handleAddToBasket = () => {
+		const product = {
+			id,
+			title,
+			price,
+			rating,
+			description,
+			category,
+			image,
+			hasPrime,
+			instanceId: uuidv4(),
+		};
+		addItemToBasket(product);
+	};
 
 	return (
 		<article className='relative m-5 bg-white z-30 p-10 flex flex-col'>
@@ -32,7 +50,7 @@ const ProductCard = ({ id, title, price, description, category, image }) => {
 				{/* Rating */}
 				<div className='flex'>
 					{Array.from({ length: rating }, (_, i) => (
-						<StarIcon key={i} className='h-5 text-yellow-500' />
+						<StarIcon key={`${id}-${i}`} className='h-5 text-yellow-500' />
 					))}
 				</div>
 			</header>
@@ -65,7 +83,9 @@ const ProductCard = ({ id, title, price, description, category, image }) => {
 				</div>
 
 				{/* Add to Basket Button */}
-				<button className='button w-full'>Add to Basket</button>
+				<button onClick={handleAddToBasket} className='button w-full'>
+					Add to Basket
+				</button>
 			</footer>
 		</article>
 	);

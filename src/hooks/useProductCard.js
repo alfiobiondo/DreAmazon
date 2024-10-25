@@ -1,4 +1,3 @@
-import ProductCard from '@/components/ProductCard';
 import { useState, useEffect } from 'react';
 
 const useProductCard = (min = 1, max = 5) => {
