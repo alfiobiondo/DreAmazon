@@ -3,6 +3,7 @@ import Image from 'next/image';
 import { StarIcon } from '@heroicons/react/24/solid';
 import { FormattedNumber, IntlProvider } from 'react-intl';
 import useBasket from '@/hooks/useBasket';
+import { v4 as uuidv4 } from 'uuid';
 
 const CheckoutProduct = ({
 	id,
@@ -27,14 +28,18 @@ const CheckoutProduct = ({
 			category,
 			image,
 			hasPrime,
-			instanceId,
+			instanceId: uuidv4(),
 		};
 
 		addItemToBasket(product);
 	};
 
 	const handleRemoveFromBasket = () => {
-		removeItemFromBasket({ id, instanceId });
+		const product = {
+			id,
+			instanceId,
+		};
+		removeItemFromBasket(product);
 	};
 
 	return (
