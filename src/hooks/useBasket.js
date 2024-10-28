@@ -4,14 +4,13 @@ import {
 	addToBasket,
 	removeFromBasket,
 	selectItems,
+	selectTotal,
 } from '@/slices/basketSlice';
 
 const useBasket = () => {
 	const dispatch = useDispatch();
 	const items = useSelector(selectItems);
-
-	// Calculate total price
-	const totalPrice = items.reduce((acc, curr) => acc + curr.price, 0);
+	const total = useSelector(selectTotal);
 
 	// Add item to basket
 	const addItemToBasket = (product) => {
@@ -23,7 +22,7 @@ const useBasket = () => {
 		dispatch(removeFromBasket(product));
 	};
 
-	return { addItemToBasket, removeItemFromBasket, items, totalPrice };
+	return { addItemToBasket, removeItemFromBasket, items, total };
 };
 
 export default useBasket;

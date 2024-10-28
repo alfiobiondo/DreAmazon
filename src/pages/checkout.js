@@ -11,7 +11,7 @@ import useBasket from '@/hooks/useBasket';
 
 const Checkout = () => {
 	const { data: session } = useSession();
-	const { items, totalPrice } = useBasket();
+	const { items, total } = useBasket();
 
 	return (
 		<div className='bg-gray-100'>
@@ -56,11 +56,11 @@ const Checkout = () => {
 					{items.length > 0 && (
 						<>
 							<h2 className='whitespace-nowrap'>
-								Subtotal ({items.length} items):
+								Subtotal ({items.length} items):{' '}
 								<span className='font-bold'>
 									<IntlProvider locale='it' defaultLocale='it'>
 										<FormattedNumber
-											value={totalPrice}
+											value={total}
 											style='currency'
 											currency='EUR'
 										/>
