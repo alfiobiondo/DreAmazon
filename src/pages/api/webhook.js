@@ -1,6 +1,6 @@
 import { buffer } from 'micro';
 import * as admin from 'firebase-admin';
-import serviceAccount from '@/firebase/permissions';
+import serviceAccount from '../../firebase/permissions';
 
 // Secure a connection to FIREBASE from the backend
 const app = !admin.apps.length
