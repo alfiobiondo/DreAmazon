@@ -3,7 +3,7 @@ import Navigation from '@/components/Navigation';
 import { CheckCircleIcon } from '@heroicons/react/24/solid';
 import { useRouter } from 'next/router';
 
-const success = () => {
+const Success = () => {
 	const router = useRouter();
 
 	return (
@@ -34,4 +34,4 @@ const success = () => {
 	);
 };
 
-export default success;
+export default Success;
