@@ -56,7 +56,7 @@ export default async function handler(req, res) {
 			const session = event.data.object;
 			console.log('Session completed:', session);
 
-			// Fulfill the order...
+			// Fulfill the order ...
 			return fulfillOrder(session)
 				.then(() => res.status(200))
 				.catch((error) => {
