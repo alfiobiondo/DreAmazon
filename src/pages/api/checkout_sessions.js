@@ -51,7 +51,7 @@ export default async function handler(req, res) {
 
 				line_items: transformedItems,
 				mode: 'payment',
-				success_url: `${req.headers.origin}/?success=true`,
+				success_url: `${req.headers.origin}/success`,
 				cancel_url: `${req.headers.origin}/?canceled=true`,
 				metadata: {
 					email,
