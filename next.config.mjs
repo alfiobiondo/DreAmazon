@@ -15,6 +15,10 @@ const nextConfig = {
 			},
 		],
 	},
+	/* env: {
+		next_public_stripe_publishable_key:
+			process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY,
+	}, */
 };
 
 export default nextConfig;

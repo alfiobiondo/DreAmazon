@@ -1,6 +1,6 @@
 # DreAmazon
 
-DreAmazon is an Amazon clone made with Next.js, Tailwind CSS, Redix (State Management), Stripe, Firebase and Fake Store API.
+DreAmazon is an Amazon clone made with Next.js, Tailwind CSS, Redux (State Management), Stripe, Firebase and Fake Store API.
 
 ## The project is going to be deployed on Vercel
 

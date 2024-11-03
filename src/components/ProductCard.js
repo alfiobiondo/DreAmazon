@@ -1,14 +1,15 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Image from 'next/image';
 import { StarIcon } from '@heroicons/react/24/solid';
 import { IntlProvider, FormattedNumber } from 'react-intl';
 import useProductCard from '@/hooks/useProductCard';
 import useBasket from '@/hooks/useBasket';
-import { v4 as uuidv4 } from 'uuid';
+import QuantitySelector from './QuantitySelector';
 
 const ProductCard = ({ id, title, price, description, category, image }) => {
 	const { rating, hasPrime } = useProductCard();
 	const { addItemToBasket } = useBasket();
+	const [quantity, setQuantity] = useState(1);
 
 	const handleAddToBasket = () => {
 		const product = {
@@ -20,9 +21,8 @@ const ProductCard = ({ id, title, price, description, category, image }) => {
 			category,
 			image,
 			hasPrime,
-			instanceId: uuidv4(),
 		};
-		addItemToBasket(product);
+		addItemToBasket(product, quantity);
 	};
 
 	return (
@@ -82,10 +82,15 @@ const ProductCard = ({ id, title, price, description, category, image }) => {
 					)}
 				</div>
 
-				{/* Add to Basket Button */}
-				<button onClick={handleAddToBasket} className='button w-full'>
-					Add to Basket
-				</button>
+				<div className='flex items-center space-x-2 md:space-x-0 md:space-y-2 md:flex-col'>
+					{/* Add to Basket Button */}
+					<button onClick={handleAddToBasket} className='button w-full'>
+						Add to Basket
+					</button>
+
+					{/* Quantity Selector */}
+					<QuantitySelector onQuantityChange={setQuantity} />
+				</div>
 			</footer>
 		</article>
 	);

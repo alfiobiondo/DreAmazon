@@ -1,3 +1,4 @@
+// basketSlice.js
 import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
@@ -8,26 +9,47 @@ export const basketSlice = createSlice({
 	name: 'basket',
 	initialState,
 	reducers: {
-		// Actions
 		addToBasket: (state, action) => {
-			state.items = [...state.items, action.payload];
+			const { id, quantity = 1 } = action.payload;
+
+			const newBasket = [...state.items];
+
+			const existingItem = newBasket.find((item) => item.id === id);
+
+			if (existingItem) {
+				existingItem.quantity += quantity;
+			} else {
+				newBasket.push({ ...action.payload, quantity });
+			}
+
+			state.items = newBasket;
 		},
 		removeFromBasket: (state, action) => {
-			const { id, instanceId } = action.payload;
-			const index = state.items.findIndex(
-				(basketItem) =>
-					basketItem.id === id && basketItem.instanceId === instanceId
-			);
+			const { id } = action.payload;
 
-			let newBasket = [...state.items];
+			const newBasket = [...state.items];
+
+			const index = newBasket.findIndex((item) => item.id === id);
 
 			if (index >= 0) {
-				// The item exists in the basket... remove it
 				newBasket.splice(index, 1);
 			} else {
 				console.warn(
-					`Can't remove product (id: ${action.payload.id}, instanceId ${instanceId}) as it is not in the Basket`
+					`Can't remove product (id: ${id}, as it is not in the Basket`
 				);
+			}
+
+			state.items = newBasket;
+		},
+		updateQuantity: (state, action) => {
+			const { id, quantity } = action.payload;
+
+			const newBasket = [...state.items];
+
+			const existingItem = newBasket.find((item) => item.id === id);
+
+			if (existingItem) {
+				existingItem.quantity = quantity;
 			}
 
 			state.items = newBasket;
@@ -35,11 +57,15 @@ export const basketSlice = createSlice({
 	},
 });
 
-export const { addToBasket, removeFromBasket } = basketSlice.actions;
+export const { addToBasket, removeFromBasket, updateQuantity } =
+	basketSlice.actions;
 
-// Selectors - This is how we pull information from the Global store slice
+// Selectors
 export const selectItems = (state) => state.basket.items;
 export const selectTotal = (state) =>
-	state.basket.items.reduce((total, item) => total + item.price, 0);
+	state.basket.items.reduce(
+		(total, item) => total + item.price * item.quantity,
+		0
+	);
 
 export default basketSlice.reducer;

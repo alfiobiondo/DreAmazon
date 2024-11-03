@@ -3,7 +3,7 @@ import Image from 'next/image';
 import { StarIcon } from '@heroicons/react/24/solid';
 import { FormattedNumber, IntlProvider } from 'react-intl';
 import useBasket from '@/hooks/useBasket';
-import { v4 as uuidv4 } from 'uuid';
+import QuantitySelector from './QuantitySelector';
 
 const CheckoutProduct = ({
 	id,
@@ -14,36 +14,23 @@ const CheckoutProduct = ({
 	category,
 	image,
 	hasPrime,
-	instanceId,
+	quantity,
 }) => {
-	const { addItemToBasket, removeItemFromBasket } = useBasket();
-
-	const handleAddToBasket = () => {
-		const product = {
-			id,
-			title,
-			price,
-			rating,
-			description,
-			category,
-			image,
-			hasPrime,
-			instanceId: uuidv4(),
-		};
-
-		addItemToBasket(product);
-	};
+	const { removeItemFromBasket, updateItemQuantity } = useBasket();
 
 	const handleRemoveFromBasket = () => {
 		const product = {
 			id,
-			instanceId,
 		};
 		removeItemFromBasket(product);
 	};
 
+	const handleQuantityChange = (newQuantity) => {
+		updateItemQuantity(id, newQuantity);
+	};
+
 	return (
-		<section className='grid grid-cols-5'>
+		<section className='grid grid-cols-1 md:grid-cols-5 gap-4'>
 			<div className='h-48 w-full flex items-center justify-center'>
 				<Image
 					src={image}
@@ -82,14 +69,16 @@ const CheckoutProduct = ({
 				)}
 			</div>
 
-			{/* Right add/remove buttons */}
-			<div className='flex flex-col space-y-2 my-auto justify-self-end'>
-				<button onClick={handleAddToBasket} className='button'>
-					Add to Basket
-				</button>
-				<button onClick={handleRemoveFromBasket} className='button'>
+			{/* Right Quantity and Buttons Column  */}
+			<div className='flex flex-row w-full my-auto space-x-2 md:space-x-0 md:space-y-2 md:space-y-reverse md:justify-self-end md:flex-col-reverse'>
+				<button onClick={handleRemoveFromBasket} className='button w-full'>
 					Remove from Basket
 				</button>
+
+				<QuantitySelector
+					onQuantityChange={handleQuantityChange}
+					quantity={quantity}
+				/>
 			</div>
 		</section>
 	);
