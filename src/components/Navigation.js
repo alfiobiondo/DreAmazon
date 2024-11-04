@@ -53,7 +53,7 @@ const Navigation = () => {
 							</a>
 						</li>
 
-						<li className='link'>
+						<li onClick={() => router.push('/orders')} className='link'>
 							<a>
 								<p>Returns</p>
 								<p className='font-extrabold md:text-sm'>& Orders</p>

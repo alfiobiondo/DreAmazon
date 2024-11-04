@@ -3,6 +3,7 @@ import Head from 'next/head';
 import Navigation from '@/components/Navigation';
 import Banner from '@/components/Banner';
 import ProductFeed from '@/components/ProductFeed';
+import { getSession } from 'next-auth/react';
 
 const Home = ({ products }) => {
 	return (
@@ -25,6 +26,8 @@ const Home = ({ products }) => {
 export default Home;
 
 export async function getServerSideProps(context) {
+	const session = await getSession(context);
+
 	try {
 		const products = await fetch('https://fakestoreapi.com/products').then(
 			(res) => res.json()
@@ -33,6 +36,7 @@ export async function getServerSideProps(context) {
 		return {
 			props: {
 				products,
+				session,
 			},
 		};
 	} catch (error) {
@@ -40,6 +44,7 @@ export async function getServerSideProps(context) {
 		return {
 			props: {
 				products: [], // Return an empty array in case of error
+				session,
 			},
 		};
 	}
