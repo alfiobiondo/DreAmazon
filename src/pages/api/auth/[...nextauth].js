@@ -10,12 +10,6 @@ export const authOptions = {
 		}),
 		// ...add more providers here
 	],
-	callbacks: {
-		async session({ session, token }) {
-			session.user.uid = token.sub; // Include the user's UID in the session
-			return session;
-		},
-	},
 };
 
 export default NextAuth(authOptions);

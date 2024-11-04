@@ -2,6 +2,8 @@ import { buffer } from 'micro';
 import * as admin from 'firebase-admin';
 import serviceAccount from '../../firebase/permissions';
 
+console.log('Request Auth Token:', request.auth.token);
+
 // Secure a connection to FIREBASE from the backend
 const app = !admin.apps.length
 	? admin.initializeApp({
