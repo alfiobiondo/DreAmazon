@@ -11,8 +11,13 @@ import { useRouter } from 'next/router';
 import { useSelector } from 'react-redux';
 import { selectItems } from '@/slices/basketSlice';
 
+import useSyncFirebaseAuth from '../hooks/useSyncFirebaseAuth';
+
 const Navigation = () => {
 	const { data: session } = useSession();
+
+	useSyncFirebaseAuth();
+
 	const router = useRouter();
 
 	const items = useSelector(selectItems);

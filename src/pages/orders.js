@@ -3,8 +3,8 @@ import React from 'react';
 import Navigation from '@/components/Navigation';
 import { getSession, useSession } from 'next-auth/react';
 
-import { collection, getDocs, orderBy, query } from 'firebase/firestore';
-import db from '@/firebase/clientApp';
+import admin from '@/firebase/admin';
+
 import moment from 'moment';
 import Order from '@/components/Order';
 
@@ -13,7 +13,6 @@ const Orders = ({ orders }) => {
 
 	return (
 		<div>
-			<Navigation />
 			<main className='max-w-screen-lg mx-auto p-10'>
 				<h1 className='text-3xl border-b mb-2 pb-1 border-yellow-400'>
 					Your Orders
@@ -59,31 +58,42 @@ export async function getServerSideProps(context) {
 		};
 	}
 
-	// Fetch the user's orders from Firestore
-	const ordersRef = collection(db, 'users', session.user.email, 'orders');
-	const q = query(ordersRef, orderBy('timestamp', 'desc'));
-	const stripeOrders = await getDocs(q);
+	// Use the Firebase Admin SDK to interact with Firestore
+	try {
+		// Fetch the user's orders from Firestore
+		const ordersRef = admin
+			.firestore()
+			.collection('users')
+			.doc(session.user.email)
+			.collection('orders')
+			.orderBy('timestamp', 'desc');
 
-	// Stripe orders
-	const orders = await Promise.all(
-		stripeOrders.docs.map(async (order) => ({
-			id: order.id,
-			amount: order.data().amount,
-			amountShipping: order.data().amount_shipping,
-			images: order.data().images,
-			timestamp: moment(order.data().timestamp.toDate()).unix(),
-			items: (
-				await stripe.checkout.sessions.listLineItems(order.id, {
-					limit: 100,
-				})
-			).data,
-		}))
-	);
+		const stripeOrders = await ordersRef.get();
 
-	// Return the orders to the client
-	return {
-		props: {
-			orders,
-		},
-	};
+		// Stripe orders
+		const orders = await Promise.all(
+			stripeOrders.docs.map(async (order) => ({
+				id: order.id,
+				amount: order.data().amount,
+				amountShipping: order.data().amount_shipping,
+				images: order.data().images,
+				timestamp: moment(order.data().timestamp.toDate()).unix(),
+				items: (
+					await stripe.checkout.sessions.listLineItems(order.id, {
+						limit: 100,
+					})
+				).data,
+			}))
+		);
+
+		// Return the orders to the client
+		return {
+			props: {
+				orders,
+			},
+		};
+	} catch (error) {
+		console.error('Error fetching orders:', error);
+		return { props: {} };
+	}
 }

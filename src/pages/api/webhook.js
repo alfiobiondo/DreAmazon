@@ -1,13 +1,5 @@
 import { buffer } from 'micro';
-import * as admin from 'firebase-admin';
-import serviceAccount from '../../firebase/permissions';
-
-// Secure a connection to FIREBASE from the backend
-const app = !admin.apps.length
-	? admin.initializeApp({
-			credential: admin.credential.cert(serviceAccount),
-	  })
-	: admin.app();
+import admin from '../../firebase/admin';
 
 // Establish a connection to Stripe
 const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
@@ -17,7 +9,7 @@ const endpointSecret = process.env.STRIPE_SIGNING_SECRET;
 const fulfillOrder = async (session) => {
 	// console.log('Fulfilling order', session)
 
-	return app
+	return admin
 		.firestore()
 		.collection('users')
 		.doc(session.metadata.email)

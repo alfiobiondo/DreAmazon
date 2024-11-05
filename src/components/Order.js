@@ -22,7 +22,7 @@ const Order = ({ id, amount, amountShipping, items, timestamp, images }) => {
 						</IntlProvider>
 						{amountShipping ? (
 							<IntlProvider locale='it' defaultLocale='it'>
-								<p className='mx-1'>- Next Day Delivery </p>
+								<span className='mx-1'>- Next Day Delivery </span>
 								<FormattedNumber
 									value={amountShipping}
 									style='currency'

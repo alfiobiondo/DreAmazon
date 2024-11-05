@@ -60,7 +60,6 @@ const Checkout = () => {
 
 	return (
 		<div className='bg-gray-100'>
-			<Navigation />
 			<main className='lg:flex max-w-screen-2xl mx-auto'>
 				{/* Left hand side */}
 				<section className='flex-grow m-5 shadow-sm'>

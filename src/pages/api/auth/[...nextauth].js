@@ -10,6 +10,14 @@ export const authOptions = {
 		}),
 		// ...add more providers here
 	],
+	session: {
+		maxAge: 60 * 60, // Set the session duration (e.g., 1 hour)
+	},
+	callbacks: {
+		async session({ session }) {
+			return session;
+		},
+	},
 };
 
 export default NextAuth(authOptions);
