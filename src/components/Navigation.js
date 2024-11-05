@@ -32,10 +32,10 @@ const Navigation = () => {
 						<Link href='/'>
 							<Image
 								alt='Amazon logo'
-								src='https://links.papareact.com/f90'
-								width={150}
+								src='/images/dreamazon_logo.png'
+								width={210}
 								height={40}
-								className='object-contain cursor-pointer h-10'
+								className='object-contain cursor-pointer h-10 pb-1'
 							/>
 						</Link>
 					</div>
