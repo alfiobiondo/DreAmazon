@@ -6,12 +6,12 @@ const nextConfig = {
 			{
 				protocol: 'https',
 				hostname: 'links.papareact.com',
-				pathname: '**',
+				pathname: '/**',
 			},
 			{
 				protocol: 'https',
 				hostname: 'fakestoreapi.com',
-				pathname: '**',
+				pathname: '/**',
 			},
 		],
 	},
