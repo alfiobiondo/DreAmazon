@@ -27,9 +27,10 @@ export async function getServerSideProps(context) {
 	const session = await getSession(context);
 
 	try {
-		const products = await fetch('https://fakestoreapi.com/products').then(
-			(res) => res.json()
-		);
+		const res = await fetch('https://fakestoreapi.com/products');
+		const products = await res.json();
+
+		console.log('SSR products length:', products?.length);
 
 		return {
 			props: {
@@ -38,10 +39,11 @@ export async function getServerSideProps(context) {
 			},
 		};
 	} catch (error) {
-		console.log('getServerSideProps error', error);
+		console.error('getServerSideProps error:', error);
+
 		return {
 			props: {
-				products: [], // Return an empty array in case of error
+				products: [],
 				session,
 			},
 		};
