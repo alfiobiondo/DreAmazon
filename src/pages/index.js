@@ -28,9 +28,12 @@ export async function getServerSideProps(context) {
 
 	try {
 		const res = await fetch('https://fakestoreapi.com/products');
+
+		console.log('STATUS:', res.status);
+
 		const products = await res.json();
 
-		console.log('SSR products length:', products?.length);
+		console.log('PRODUCTS LENGTH:', products?.length);
 
 		return {
 			props: {
@@ -39,7 +42,7 @@ export async function getServerSideProps(context) {
 			},
 		};
 	} catch (error) {
-		console.error('getServerSideProps error:', error);
+		console.error('SSR ERROR:', error);
 
 		return {
 			props: {
